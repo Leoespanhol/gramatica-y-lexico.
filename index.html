@@ -1,1 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramática y Léxico - LeoEspanhol</title>
+    <style>
+        :root {
+            --primary-gold: #e2b755;
+            --primary-gold-dark: #c89c3a;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #38bdf8;
+            --accent-pink: #f43f5e;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header / Branding */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--primary-gold);
+            margin-bottom: 30px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-symbol {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary-gold);
+            line-height: 1;
+        }
+
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-light);
+        }
+
+        .brand-name span {
+            color: var(--primary-gold);
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-dark));
+            color: #000;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* Student Card */
+        .student-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--primary-gold);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Hero Header */
+        .hero-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Activity Cards */
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-gold);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .item-row {
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .item-row p {
+            margin-bottom: 10px;
+            color: #cbd5e1;
+        }
+
+        .question-group {
+            margin-bottom: 20px;
+        }
+
+        .question-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+
+        select, input[type="text"], input[type="email"], input[type="number"], textarea {
+            width: 100%;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .inline-input {
+            display: inline-block;
+            width: auto;
+            min-width: 130px;
+            margin: 0 4px;
+            padding: 4px 8px;
+        }
+
+        .inline-select {
+            display: inline-block;
+            width: auto;
+            margin: 0 4px;
+            padding: 4px 8px;
+        }
+
+        /* Two column layout for Dictionary */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 650px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Buttons & Footer */
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-gold), var(--primary-gold-dark));
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+            color: var(--text-light);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .sub-header {
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-symbol">L</div>
+            <div class="brand-name">LEO<span>ESPANHOL</span></div>
+        </div>
+        <div class="badge">Gramática y Léxico</div>
+    </header>
+
+    <!-- Hero Card -->
+    <div class="hero-card">
+        <h1 class="hero-title">Gramática y Léxico</h1>
+        <p style="color: var(--text-muted); margin-top: 8px;">Unidad de actividades interactivas de repaso y consolidación</p>
+    </div>
+
+    <!-- Interactive Form -->
+    <form id="activityForm" action="https://formspree.io/f/xkjngbpr" method="POST">
+        
+        <!-- Student Identification -->
+        <div class="student-card">
+            <div class="question-group" style="margin-bottom: 12px;">
+                <label for="nombre_estudiante">Nombre Completo del Estudiante *</label>
+                <input type="text" id="nombre_estudiante" name="Nombre del Estudiante" required placeholder="Escriba su nombre completo aquí...">
+            </div>
+            <div class="question-group" style="margin-bottom: 0;">
+                <label for="email_estudiante">Correo Electrónico *</label>
+                <input type="email" id="email_estudiante" name="_replyto" required placeholder="Escriba su correo electrónico...">
+            </div>
+        </div>
+
+        <!-- Ejercicio 1 -->
+        <h2 class="section-title">1. Adverbios y Adjetivos de Personalidad</h2>
+        <div class="activity-card">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Lee estas frases, elige el adverbio adecuado (bastante / muy) y escribe un adjetivo para describir a estas personas:</p>
+
+            <div class="item-row">
+                <p>1. Mi primo saltó en paracaídas por primera vez sin monitor. Es 
+                    <select name="1.1_Adverbio" class="inline-select" required>
+                        <option value="">-- Adverbio --</option>
+                        <option value="bastante">bastante</option>
+                        <option value="muy">muy</option>
+                    </select>.
+                </p>
+                <input type="text" name="1.1_Adjetivo" required placeholder="Escribe un adjetivo (ej. atrevido, valiente...)">
+            </div>
+
+            <div class="item-row">
+                <p>2. Antes de hacer submarinismo, asistí a varios cursos de preparación. Soy 
+                    <select name="1.2_Adverbio" class="inline-select" required>
+                        <option value="">-- Adverbio --</option>
+                        <option value="bastante">bastante</option>
+                        <option value="muy">muy</option>
+                    </select>.
+                </p>
+                <input type="text" name="1.2_Adjetivo" required placeholder="Escribe un adjetivo (ej. precavido, prudente...)">
+            </div>
+
+            <div class="item-row">
+                <p>3. Nunca había escalado, pero quería subir al Everest. Es 
+                    <select name="1.3_Adverbio" class="inline-select" required>
+                        <option value="">-- Adverbio --</option>
+                        <option value="bastante">bastante</option>
+                        <option value="muy">muy</option>
+                    </select>.
+                </p>
+                <input type="text" name="1.3_Adjetivo" required placeholder="Escribe un adjetivo (ej. ambicioso, sensato...)">
+            </div>
+
+            <div class="item-row">
+                <p>4. No nos importaría nadar con tiburones en mar abierto. Somos 
+                    <select name="1.4_Adverbio" class="inline-select" required>
+                        <option value="">-- Adverbio --</option>
+                        <option value="bastante">bastante</option>
+                        <option value="muy">muy</option>
+                    </select>.
+                </p>
+                <input type="text" name="1.4_Adjetivo" required placeholder="Escribe un adjetivo...">
+            </div>
+
+            <div class="item-row">
+                <p>5. Nunca pondría mi vida en peligro, no practicaría deportes de riesgo. Soy 
+                    <select name="1.5_Adverbio" class="inline-select" required>
+                        <option value="">-- Adverbio --</option>
+                        <option value="bastante">bastante</option>
+                        <option value="muy">muy</option>
+                    </select>.
+                </p>
+                <input type="text" name="1.5_Adjetivo" required placeholder="Escribe un adjetivo (ej. miedoso, prudente...)">
+            </div>
+
+            <div class="item-row">
+                <p>6. Cuando hago senderismo, siempre llevo una mochila con todo lo necesario. Soy 
+                    <select name="1.6_Adverbio" class="inline-select" required>
+                        <option value="">-- Adverbio --</option>
+                        <option value="bastante">bastante</option>
+                        <option value="muy">muy</option>
+                    </select>.
+                </p>
+                <input type="text" name="1.6_Adjetivo" required placeholder="Escribe un adjetivo (ej. organizado, previsor...)">
+            </div>
+        </div>
+
+        <!-- Ejercicio 2 -->
+        <h2 class="section-title">2. Descripción de Experiencias Pasadas</h2>
+        <div class="activity-card">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Describe cómo fue/fueron o cómo era/eran... y comenta los detalles de cada situación:</p>
+
+            <div class="question-group">
+                <label for="p2_1">1. Tu peor regalo de cumpleaños:</label>
+                <textarea id="p2_1" name="2.1_Peor_regalo" required placeholder="Escribe tu descripción aquí..."></textarea>
+            </div>
+
+            <div class="question-group">
+                <label for="p2_2">2. Las vacaciones del año pasado:</label>
+                <textarea id="p2_2" name="2.2_Vacaciones_pasadas" required placeholder="Escribe tu descripción aquí..."></textarea>
+            </div>
+
+            <div class="question-group">
+                <label for="p2_3">3. El peor hotel donde te has alojado:</label>
+                <textarea id="p2_3" name="2.3_Peor_hotel" required placeholder="Escribe tu descripción aquí..."></textarea>
+            </div>
+
+            <div class="question-group">
+                <label for="p2_4">4. El último partido (tenis, fútbol, etc.) que viste:</label>
+                <textarea id="p2_4" name="2.4_Ultimo_partido" required placeholder="Escribe tu descripción aquí..."></textarea>
+            </div>
+
+            <div class="question-group">
+                <label for="p2_5">5. La boda de tu mejor amigo/a o un familiar:</label>
+                <textarea id="p2_5" name="2.5_Boda" required placeholder="Escribe tu descripción aquí..."></textarea>
+            </div>
+
+            <div class="question-group">
+                <label for="p2_6">6. Tu última clase de español:</label>
+                <textarea id="p2_6" name="2.6_Ultima_clase" required placeholder="Escribe tu descripción aquí..."></textarea>
+            </div>
+        </div>
+
+        <!-- Ejercicio 3 -->
+        <h2 class="section-title">3. Tiempos Verbales del Pasado (Gerona)</h2>
+        <div class="activity-card">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Completa el texto conjugando los verbos entre paréntesis en el tiempo de pasado adecuado:</p>
+
+            <div style="line-height: 2.2; color: #e2e8f0;">
+                Mi familia y yo <input type="text" name="3_Verbo_1_decidir" class="inline-input" required placeholder="(decidir)"> hacer una escapada a Gerona. Recuerdo que en aquel viaje <input type="text" name="3_Verbo_2_alquilar" class="inline-input" required placeholder="(alquilar)"> un coche para poder visitar el centro porque <input type="text" name="3_Verbo_3_alojarse" class="inline-input" required placeholder="(alojarse)"> a casi una hora de allí. <input type="text" name="3_Verbo_4_ser" class="inline-input" required placeholder="(ser)"> muy difícil encontrar aparcamiento, pero después de más de una hora, al final <input type="text" name="3_Verbo_5_aparcar" class="inline-input" required placeholder="(aparcar)"> en un callejón muy cerca de las murallas. Recuerdo que <input type="text" name="3_Verbo_6_estar" class="inline-input" required placeholder="(estar)"> tan cansados de dar vueltas que, una vez que aparcamos, <input type="text" name="3_Verbo_7_salir" class="inline-input" required placeholder="(salir)"> todos corriendo del coche.
+                <br><br>
+                Después de visitar la ciudad, agotados, <input type="text" name="3_Verbo_8_intentar" class="inline-input" required placeholder="(intentar)"> regresar al lugar donde <input type="text" name="3_Verbo_9_aparcar" class="inline-input" required placeholder="(aparcar)">. Pero ¡<input type="text" name="3_Verbo_10_ser" class="inline-input" required placeholder="(ser)"> terrible! <input type="text" name="3_Verbo_11_estar" class="inline-input" required placeholder="(estar)"> más de una hora dando vueltas para encontrarlo, ya que todas las calles <input type="text" name="3_Verbo_12_parecer" class="inline-input" required placeholder="(parecer)"> iguales.
+                <br><br>
+                Entonces, <input type="text" name="3_Verbo_13_sentarse" class="inline-input" required placeholder="(sentarse)"> en una acera para ver las fotografías que <input type="text" name="3_Verbo_14_hacer" class="inline-input" required placeholder="(hacer)"> ese día y, de repente, ¡<input type="text" name="3_Verbo_15_ver" class="inline-input" required placeholder="(ver)"> una foto con el nombre de la calle! Nunca me <input type="text" name="3_Verbo_16_pasar" class="inline-input" required placeholder="(pasar)"> algo así. ¡Qué suerte!
+            </div>
+
+            <div class="question-group" style="margin-top: 25px;">
+                <label for="p3_justificacion">Justifica por qué has elegido esos tiempos verbales en el texto:</label>
+                <textarea id="p3_justificacion" name="3_Justificacion_tiempos" required placeholder="Explica el uso de Indefinido, Imperfecto o Pluscuamperfecto..."></textarea>
+            </div>
+        </div>
+
+        <!-- Ejercicio 4 -->
+        <h2 class="section-title">4. Biografía de Rigoberta Menchú</h2>
+        <div class="activity-card">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Ordena cronológicamente los acontecimientos (asigna números del 1 al 7) y reescribe el texto en pasado:</p>
+
+            <div class="item-row">
+                <label>Cuando luchar por su pueblo, sufrir la persecución de las fuerzas represivas guatemaltecas y exiliarse a México.</label>
+                <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
+                    <span style="font-size: 0.85rem; color: var(--accent-blue);">Orden (1-7):</span>
+                    <input type="number" name="4.1_Orden" min="1" max="7" style="width: 80px;" required>
+                </div>
+            </div>
+
+            <div class="item-row">
+                <label>En 1992 recibir el Premio Nobel de la Paz en reconocimiento a su causa y actualmente dedicarse a actividades a favor de los derechos humanos.</label>
+                <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
+                    <span style="font-size: 0.85rem; color: var(--accent-blue);">Orden (1-7):</span>
+                    <input type="number" name="4.2_Orden" min="1" max="7" style="width: 80px;" required>
+                </div>
+            </div>
+
+            <div class="item-row">
+                <label>Cuando ser niña trabajar en el campo y, de adolescente, irse a la ciudad a servir como empleada doméstica, donde conocer la injusticia, la discriminación y la miseria de los indígenas de su país.</label>
+                <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
+                    <span style="font-size: 0.85rem; color: var(--accent-blue);">Orden (1-7):</span>
+                    <input type="number" name="4.3_Orden" min="1" max="7" style="width: 80px;" required>
+                </div>
+            </div>
+
+            <div class="item-row">
+                <label>Nacer en Guatemala en 1952.</label>
+                <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
+                    <span style="font-size: 0.85rem; color: var(--accent-blue);">Orden (1-7):</span>
+                    <input type="number" name="4.4_Orden" min="1" max="7" style="width: 80px;" required>
+                </div>
+            </div>
+
+            <div class="item-row">
+                <label>Aunque no ir a la escuela, a los 19 años asumir con valor e inteligencia el liderazgo en la lucha por los derechos de su raza.</label>
+                <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
+                    <span style="font-size: 0.85rem; color: var(--accent-blue);">Orden (1-7):</span>
+                    <input type="number" name="4.5_Orden" min="1" max="7" style="width: 80px;" required>
+                </div>
+            </div>
+
+            <div class="item-row">
+                <label>Ya en el extranjero, Rigoberta dedicar su vida a hacer respetar los derechos y los valores de los pueblos indígenas de América.</label>
+                <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
+                    <span style="font-size: 0.85rem; color: var(--accent-blue);">Orden (1-7):</span>
+                    <input type="number" name="4.6_Orden" min="1" max="7" style="width: 80px;" required>
+                </div>
+            </div>
+
+            <div class="item-row">
+                <label>Cuando participar en una reunión invitada por el presidente del Gobierno mexicano, ser confundida con una vendedora ambulante e intentarla sacar a la fuerza del hotel.</label>
+                <div style="display: flex; gap: 10px; align-items: center; margin-top: 8px;">
+                    <span style="font-size: 0.85rem; color: var(--accent-blue);">Orden (1-7):</span>
+                    <input type="number" name="4.7_Orden" min="1" max="7" style="width: 80px;" required>
+                </div>
+            </div>
+
+            <div class="question-group" style="margin-top: 25px;">
+                <label for="p4_texto_completo">Escribe aquí el texto completo ordenado y redactado en tiempos de pasado:</label>
+                <textarea id="p4_texto_completo" name="4_Texto_Rigoberta_Redactado" style="min-height: 150px;" required placeholder="Redacta la biografía completa combinando los acontecimientos ordenados en pasado..."></textarea>
+            </div>
+        </div>
+
+        <!-- Ejercicio 5 -->
+        <h2 class="section-title">5. Pretérito Perfecto vs. Pluscuamperfecto</h2>
+        <div class="activity-card">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Lee las frases y elige la opción correcta:</p>
+
+            <div class="item-row">
+                <p>1. Qué foto más bonita. Nunca 
+                    <select name="5.1_Opcion" class="inline-select" required>
+                        <option value="">-- Selecciona --</option>
+                        <option value="he estado">he estado</option>
+                        <option value="había estado">había estado</option>
+                    </select> ahí. Es precioso, algún día lo visitaré.
+                </p>
+            </div>
+
+            <div class="item-row">
+                <p>2. ¡Qué paella tan rica! Nunca 
+                    <select name="5.2_Opcion" class="inline-select" required>
+                        <option value="">-- Selecciona --</option>
+                        <option value="he probado">he probado</option>
+                        <option value="había probado">había probado</option>
+                    </select> algo tan bueno. Estaba riquísima.
+                </p>
+            </div>
+
+            <div class="item-row">
+                <p>3. Siempre 
+                    <select name="5.3_Opcion" class="inline-select" required>
+                        <option value="">-- Selecciona --</option>
+                        <option value="he querido">he querido</option>
+                        <option value="había querido">había querido</option>
+                    </select> hacer escalada, pero no me atrevía. Menos mal que me convenciste para hacerlo. ¡Fue increíble!
+                </p>
+            </div>
+
+            <div class="item-row">
+                <p>4. Es la primera vez que entro en un palacio árabe, no 
+                    <select name="5.4_Opcion" class="inline-select" required>
+                        <option value="">-- Selecciona --</option>
+                        <option value="he visto">he visto</option>
+                        <option value="había visto">había visto</option>
+                    </select> algo así en mi vida.
+                </p>
+            </div>
+
+            <div class="item-row">
+                <p>5. Siempre 
+                    <select name="5.5_Opcion" class="inline-select" required>
+                        <option value="">-- Selecciona --</option>
+                        <option value="he deseado">he deseado</option>
+                        <option value="había deseado">había deseado</option>
+                    </select> ser escritora, pero no tengo suficiente talento para escribir.
+                </p>
+            </div>
+
+            <div class="item-row">
+                <p>6. Qué buenas están estas tapas, ¿
+                    <select name="5.6_Opcion" class="inline-select" required>
+                        <option value="">-- Selecciona --</option>
+                        <option value="has venido">has venido</option>
+                        <option value="habías venido">habías venido</option>
+                    </select> ya aquí antes?
+                </p>
+            </div>
+        </div>
+
+        <!-- Ejercicio 6 -->
+        <h2 class="section-title">6. Anécdota de Toni Nadal y Rafa Nadal</h2>
+        <div class="activity-card">
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Toni Nadal cuenta una anécdota sobre su sobrino Rafa Nadal. Complétala con imperfecto o pretérito indefinido/perfecto simple:</p>
+
+            <div style="line-height: 2.2; color: #e2e8f0;">
+                Cuando Rafa <input type="text" name="6_Verbo_1_tener" class="inline-input" required placeholder="(tener)"> quince años, otro chico, él y yo <input type="text" name="6_Verbo_2_viajar" class="inline-input" required placeholder="(viajar)"> a un torneo de tenis. <input type="text" name="6_Verbo_3_jugar" class="inline-input" required placeholder="(jugar)"> los dos al mismo tiempo. Yo a lo lejos <input type="text" name="6_Verbo_4_ver" class="inline-input" required placeholder="(ver)"> jugar a mi sobrino. Su partido estaba siendo un auténtico desastre. <input type="text" name="6_Verbo_5_perder" class="inline-input" required placeholder="(perder)"> 5-0 contra un jugador que no <input type="text" name="6_Verbo_6_ser" class="inline-input" required placeholder="(ser)"> demasiado bueno. Un amigo mío, exjugador, <input type="text" name="6_Verbo_7_ver" class="inline-input" required placeholder="(ver)"> que Rafa <input type="text" name="6_Verbo_8_jugar" class="inline-input" required placeholder="(jugar)"> con una raqueta rota. Entonces, yo <input type="text" name="6_Verbo_9_ir" class="inline-input" required placeholder="(ir)"> a su cancha y se lo dije. Él la <input type="text" name="6_Verbo_10_mirar" class="inline-input" required placeholder="(mirar)"> y la <input type="text" name="6_Verbo_11_cambiar" class="inline-input" required placeholder="(cambiar)">, pero al final <input type="text" name="6_Verbo_12_perder" class="inline-input" required placeholder="(perder)"> por 6-0, 7-5. Cuando <input type="text" name="6_Verbo_13_terminar" class="inline-input" required placeholder="(terminar)"> el partido, le pregunté si le <input type="text" name="6_Verbo_14_pasar" class="inline-input" required placeholder="(pasar)"> algo, y él me contestó que no se había dado cuenta.
+            </div>
+        </div>
+
+        <!-- Diccionario Section -->
+        <h2 class="section-title">Crea tu propio diccionario</h2>
+        <div class="activity-card">
+            <div class="sub-header">Actividades arriesgadas</div>
+            <p style="margin-bottom: 20px; color: var(--text-muted);">Completa con actividades de riesgo que conoces o que te gustaría hacer y relaciona cada una con un adjetivo:</p>
+
+            <div class="two-col">
+                <div class="question-group">
+                    <label for="dic_acuaticas" style="color: var(--accent-blue);">Acuáticas:</label>
+                    <textarea id="dic_acuaticas" name="Diccionario_Acuaticas" required placeholder="Ej. Submarinismo (apasionante), Rafting (extremo)..."></textarea>
+                </div>
+                <div class="question-group">
+                    <label for="dic_terrestres" style="color: var(--primary-gold);">Terrestres:</label>
+                    <textarea id="dic_terrestres" name="Diccionario_Terrestres" required placeholder="Ej. Escalada (peligrosa), Puenting (impresionante)..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expresiones Section -->
+        <h2 class="section-title">Más allá de las palabras</h2>
+        <div class="activity-card">
+            <div class="sub-header">Expresiones relacionadas con sentimientos y emociones</div>
+            <p style="margin-bottom: 20px; color: var(--text-muted);">01. ¿Conoces estas expresiones? Escribe qué significan y selecciona si se refieren a miedo (M), precaución (P) o valentía (V):</p>
+
+            <div class="item-row">
+                <label>1. Ser un gallina</label>
+                <select name="Exp_1_Tipo" class="inline-select" style="margin-bottom: 8px;" required>
+                    <option value="">-- Significado --</option>
+                    <option value="Miedo (M)">Miedo (M)</option>
+                    <option value="Precaución (P)">Precaución (P)</option>
+                    <option value="Valentía (V)">Valentía (V)</option>
+                </select>
+                <input type="text" name="Exp_1_Significado" required placeholder="Explicación del significado...">
+            </div>
+
+            <div class="item-row">
+                <label>2. Tener (muchas) agallas</label>
+                <select name="Exp_2_Tipo" class="inline-select" style="margin-bottom: 8px;" required>
+                    <option value="">-- Significado --</option>
+                    <option value="Miedo (M)">Miedo (M)</option>
+                    <option value="Precaución (P)">Precaución (P)</option>
+                    <option value="Valentía (V)">Valentía (V)</option>
+                </select>
+                <input type="text" name="Exp_2_Significado" required placeholder="Explicación del significado...">
+            </div>
+
+            <div class="item-row">
+                <label>3. Echarse (para) atrás</label>
+                <select name="Exp_3_Tipo" class="inline-select" style="margin-bottom: 8px;" required>
+                    <option value="">-- Significado --</option>
+                    <option value="Miedo (M)">Miedo (M)</option>
+                    <option value="Precaución (P)">Precaución (P)</option>
+                    <option value="Valentía (V)">Valentía (V)</option>
+                </select>
+                <input type="text" name="Exp_3_Significado" required placeholder="Explicación del significado...">
+            </div>
+
+            <div class="item-row">
+                <label>4. Pensárselo dos veces</label>
+                <select name="Exp_4_Tipo" class="inline-select" style="margin-bottom: 8px;" required>
+                    <option value="">-- Significado --</option>
+                    <option value="Miedo (M)">Miedo (M)</option>
+                    <option value="Precaución (P)">Precaución (P)</option>
+                    <option value="Valentía (V)">Valentía (V)</option>
+                </select>
+                <input type="text" name="Exp_4_Significado" required placeholder="Explicación del significado...">
+            </div>
+
+            <div class="item-row">
+                <label>5. Ser echado para adelante</label>
+                <select name="Exp_5_Tipo" class="inline-select" style="margin-bottom: 8px;" required>
+                    <option value="">-- Significado --</option>
+                    <option value="Miedo (M)">Miedo (M)</option>
+                    <option value="Precaución (P)">Precaución (P)</option>
+                    <option value="Valentía (V)">Valentía (V)</option>
+                </select>
+                <input type="text" name="Exp_5_Significado" required placeholder="Explicación del significado...">
+            </div>
+
+            <div class="item-row">
+                <label>6. Andar con pies de plomo</label>
+                <select name="Exp_6_Tipo" class="inline-select" style="margin-bottom: 8px;" required>
+                    <option value="">-- Significado --</option>
+                    <option value="Miedo (M)">Miedo (M)</option>
+                    <option value="Precaución (P)">Precaución (P)</option>
+                    <option value="Valentía (V)">Valentía (V)</option>
+                </select>
+                <input type="text" name="Exp_6_Significado" required placeholder="Explicación del significado...">
+            </div>
+
+            <div class="sub-header" style="margin-top: 30px;">02. Completa las frases con las expresiones anteriores</div>
+            
+            <div class="item-row">
+                <p>1. Estamos en una situación complicada, así que antes de actuar hay que 
+                    <input type="text" name="Frase_Exp_1" class="inline-input" style="min-width: 200px;" required placeholder="Escribe la expresión...">.
+                </p>
+            </div>
+
+            <div class="item-row">
+                <p>2. ¡
+                    <input type="text" name="Frase_Exp_2" class="inline-input" style="min-width: 180px;" required placeholder="Escribe la expresión...">!, esto lo puede hacer hasta un niño.
+                </p>
+            </div>
+
+            <div class="item-row">
+                <p>3. Siempre he pensado que mi padre 
+                    <input type="text" name="Frase_Exp_3" class="inline-input" style="min-width: 200px;" required placeholder="Escribe la expresión...">, nunca se rinde ante las dificultades.
+                </p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="actions">
+            <button type="reset" class="btn btn-secondary">Limpiar Respuestas</button>
+            <button type="submit" class="btn btn-primary">Enviar Respuestas</button>
+        </div>
+    </form>
+
+    <!-- Footer -->
+    <footer>
+        &copy; LeoEspanhol - Material Didáctico Interactivo.
+    </footer>
+</div>
+
+</body>
+</html>
